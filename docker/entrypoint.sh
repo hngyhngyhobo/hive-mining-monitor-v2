@@ -115,7 +115,14 @@ echo ""
 # Create directories and set permissions
 echo "📁 Setting up directories..."
 mkdir -p /config /logs
-touch /logs/mining-monitor.log
+
+# Try to create log file, but don't fail if we can't
+echo "📁 Initializing log files..."
+if touch /logs/mining-monitor.log 2>/dev/null; then
+    echo "✓ Log file created successfully"
+else
+    echo "⚠ Warning: Cannot create log file (will try during operation)"
+fi
 
 # Ensure proper permissions
 if [ "$(id -u)" = "0" ]; then
