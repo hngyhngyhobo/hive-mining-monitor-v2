@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+docs/
+
+# CI/CD
+.github/
+.vscode/
+
+# Local development
+docker-compose.yml
+docker-compose.override.yml
+.env
+.env.local
+.env.example
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+docker/logs/
+docker/config/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+target/
+
+# Test files
+tests/
+test/
+*.test.ps1
+test.txt
+
+# Config examples
+config/
+*.example

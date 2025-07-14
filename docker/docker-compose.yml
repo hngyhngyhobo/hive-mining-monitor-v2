@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  hive-mining-monitor:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: hive-mining-monitor
+    restart: unless-stopped
+    
+    environment:
+      # REQUIRED - Replace with your actual values
+      - HIVE_API_TOKEN=${HIVE_API_TOKEN:-your_hive_api_token_here}
+      - HIVE_FARM_ID=${HIVE_FARM_ID:-your_farm_id_here}
+      - MQTT_BROKER=${MQTT_BROKER:-your_mqtt_broker_ip_here}
+      
+      # Optional MQTT settings
+      - MQTT_PORT=${MQTT_PORT:-1883}
+      - MQTT_USERNAME=${MQTT_USERNAME:-}
+      - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+      
+      # Optional timing and logging
+      - RUN_INTERVAL=${RUN_INTERVAL:-300}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      
+      # Optional Unraid compatibility
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    # removing timezone
+    #  - TZ=${TZ:-America/New_York}
+      - UMASK=${UMASK:-022}
+    
+    volumes:
+      - ./config:/config
+      - ./logs:/logs
+    
+    # Use bridge networking (default)
+    networks:
+      - hive-monitor-net
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "pwsh", "-Command", "if ($$env:MQTT_BROKER) { try { $$null = Test-NetConnection -ComputerName $$env:MQTT_BROKER -Port $$env:MQTT_PORT -InformationLevel Quiet -WarningAction SilentlyContinue; exit 0 } catch { exit 1 } } else { exit 0 }"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+networks:
+  hive-monitor-net:
+    driver: bridge
+
+# Optional: Include a test MQTT broker for development
+  # mosquitto:
+  #   image: eclipse-mosquitto:2.0
+  #   container_name: mosquitto-test
+  #   restart: unless-stopped
+  #   ports:
+  #     - "1883:1883"
+  #     - "9001:9001"
+  #   volumes:
+  #     - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+  #   networks:
+  #     - hive-monitor-net
+  #   profiles:
+  #     - testing

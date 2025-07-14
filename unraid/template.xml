@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Hive Mining Monitor</Name>
+  <Repository>hngyhngyhobo/hive-mining-monitor</Repository>
+  <Registry>https://hub.docker.com/r/hngyhngyhobo/hive-mining-monitor/</Registry>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/xxxxx-hive-mining-monitor-support/</Support>
+  <Project>https://github.com/hngyhngyhobo/hive-mining-monitor</Project>
+  <Overview>Monitor HiveOS mining rigs and publish real-time statistics to MQTT broker. Tracks hashrates, temperatures, uptime, and worker status with configurable intervals. Perfect for home automation integration with Home Assistant, Node-RED, or other MQTT-enabled systems.</Overview>
+  <Category>Tools:Utilities</Category>
+  <WebUI></WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor/main/unraid/template.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor/main/unraid/icon.png</Icon>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <PostArgs></PostArgs>
+  <CPUset></CPUset>
+  <DateInstalled></DateInstalled>
+  <DonateText>Support Development</DonateText>
+  <DonateLink>https://github.com/sponsors/hngyhngyhobo</DonateLink>
+  <Requires></Requires>
+  <Description>
+    HiveOS Mining Monitor for Unraid - Monitor your mining rigs and publish data to MQTT.
+    
+    Features:
+    • Real-time monitoring of HiveOS mining workers
+    • MQTT publishing for home automation integration  
+    • Configurable monitoring intervals (default: 5 minutes)
+    • Temperature and hashrate tracking
+    • Worker uptime and status monitoring
+    • Secure API authentication
+    • Lightweight PowerShell-based container
+    
+    Requirements:
+    • HiveOS API token (get from HiveOS account settings)
+    • HiveOS Farm ID (found in dashboard URL)
+    • MQTT broker (local or remote)
+    
+    MQTT Topics Published:
+    • mining/farm/{farm_id}/workers/count - Total workers
+    • mining/farm/{farm_id}/workers/online - Online workers
+    • mining/farm/{farm_id}/workers/{worker_id}/hashrate - Individual hashrates
+    • mining/farm/{farm_id}/workers/{worker_id}/cpu_temperature - CPU temps
+    • mining/farm/{farm_id}/summary/total_hashrate - Farm total hashrate
+    • mining/farm/{farm_id}/summary/efficiency - Farm efficiency %
+  </Description>
+
+  <!-- API Configuration -->
+  <Config Name="HiveOS API Token" Target="HIVE_API_TOKEN" Default="" Mode="" Description="Your HiveOS API authentication token (get from HiveOS Account Settings → API)" Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="HiveOS Farm ID" Target="HIVE_FARM_ID" Default="" Mode="" Description="Your HiveOS Farm ID (found in farm dashboard URL after /farms/)" Type="Variable" Display="always" Required="true" Mask="false"></Config>
+
+  <!-- MQTT Configuration -->
+  <Config Name="MQTT Broker" Target="MQTT_BROKER" Default="" Mode="" Description="MQTT broker hostname or IP address (e.g., 192.168.1.100)" Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="MQTT Port" Target="MQTT_PORT" Default="1883" Mode="" Description="MQTT broker port (default: 1883)" Type="Variable" Display="always" Required="false" Mask="false">1883</Config>
+  <Config Name="MQTT Username" Target="MQTT_USERNAME" Default="" Mode="" Description="MQTT broker username (leave empty if no authentication required)" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="MQTT Password" Target="MQTT_PASSWORD" Default="" Mode="" Description="MQTT broker password (leave empty if no authentication required)" Type="Variable" Display="always" Required="false" Mask="true"></Config>
+
+  <!-- Timing Configuration -->
+  <Config Name="Update Interval" Target="RUN_INTERVAL" Default="300" Mode="" Description="Seconds between mining data updates (300 = 5 minutes, 60 = 1 minute)" Type="Variable" Display="always" Required="false" Mask="false">300</Config>
+
+  <!-- File System -->
+  <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/hive-mining-monitor" Mode="rw" Description="Configuration files and persistent data" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/hive-mining-monitor</Config>
+  <Config Name="Log Directory" Target="/logs" Default="/mnt/user/appdata/hive-mining-monitor/logs" Mode="rw" Description="Application logs and debug information" Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/hive-mining-monitor/logs</Config>
+
+  <!-- Advanced Options -->
+  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="" Description="Logging verbosity level" Type="Variable" Display="advanced" Required="false" Mask="false">INFO</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID for file permissions (99 = nobody user)" Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID for file permissions (100 = users group)" Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="Umask" Target="UMASK" Default="022" Mode="" Description="File permission mask (022 = standard permissions)" Type="Variable" Display="advanced" Required="false" Mask="false">022</Config>
+</Container>
