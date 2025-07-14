@@ -29,6 +29,9 @@ services:
     # removing timezone
     #  - TZ=${TZ:-America/New_York}
       - UMASK=${UMASK:-022}
+      # Logging Control
+      - ENABLE_FILE_LOGGING=true    # Set to "false" to disable file logging
+      - MAX_LOG_FILES=7            # Number of daily log files to keep
     
     volumes:
       - ./config:/config
