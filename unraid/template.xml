@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>Hive Mining Monitor</Name>
-  <Repository>hngyhngyhobo/hive-mining-monitor</Repository>
-  <Registry>https://hub.docker.com/r/hngyhngyhobo/hive-mining-monitor/</Registry>
+  <Repository>hngyhngyhobo/hive-mining-monitor-v2</Repository>
+  <Registry>https://hub.docker.com/r/hngyhngyhobo/hive-mining-monitor-v2/</Registry>
   <Network>bridge</Network>
   <Privileged>false</Privileged>
-  <Support>https://forums.unraid.net/topic/xxxxx-hive-mining-monitor-support/</Support>
-  <Project>https://github.com/hngyhngyhobo/hive-mining-monitor</Project>
+  <Support>https://forums.unraid.net/topic/xxxxx-hive-mining-monitor-v2-support/</Support>
+  <Project>https://github.com/hngyhngyhobo/hive-mining-monitor-v2</Project>
   <Overview>Monitor HiveOS mining rigs and publish real-time statistics to MQTT broker. Tracks hashrates, temperatures, uptime, and worker status with configurable intervals. Perfect for home automation integration with Home Assistant, Node-RED, or other MQTT-enabled systems.</Overview>
   <Category>Tools:Utilities</Category>
   <WebUI></WebUI>
-  <TemplateURL>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor/main/unraid/template.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor/main/unraid/icon.png</Icon>
+  <TemplateURL>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor-v2/main/unraid/template.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hngyhngyhobo/hive-mining-monitor-v2/main/unraid/icon.png</Icon>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
   <PostArgs></PostArgs>
   <CPUset></CPUset>
@@ -59,8 +59,8 @@
   <Config Name="Update Interval" Target="RUN_INTERVAL" Default="300" Mode="" Description="Seconds between mining data updates (300 = 5 minutes, 60 = 1 minute)" Type="Variable" Display="always" Required="false" Mask="false">300</Config>
 
   <!-- File System -->
-  <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/hive-mining-monitor" Mode="rw" Description="Configuration files and persistent data" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/hive-mining-monitor</Config>
-  <Config Name="Log Directory" Target="/logs" Default="/mnt/user/appdata/hive-mining-monitor/logs" Mode="rw" Description="Application logs and debug information" Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/hive-mining-monitor/logs</Config>
+  <Config Name="Config Directory" Target="/config" Default="/mnt/user/appdata/hive-mining-monitor-v2" Mode="rw" Description="Configuration files and persistent data" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/hive-mining-monitor-v2</Config>
+  <Config Name="Log Directory" Target="/logs" Default="/mnt/user/appdata/hive-mining-monitor-v2/logs" Mode="rw" Description="Application logs and debug information" Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/hive-mining-monitor-v2/logs</Config>
 
   <!-- Advanced Options -->
   <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="" Description="Logging verbosity level" Type="Variable" Display="advanced" Required="false" Mask="false">INFO</Config>
