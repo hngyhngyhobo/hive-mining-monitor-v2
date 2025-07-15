@@ -49,8 +49,8 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: |
-          ${{ env.REGISTRY_GITHUB }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-          ${{ env.REGISTRY_DOCKERHUB }}/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
+          ${{ env.REGISTRY_GITHUB }}/${{ github.repository_owner }}/hive-mining-monitor
+          ${{ env.REGISTRY_DOCKERHUB }}/sirsnowman/hive-mining-monitor  # <-- Your Docker Hub repo
         tags: |
           type=ref,event=branch
           type=ref,event=pr
