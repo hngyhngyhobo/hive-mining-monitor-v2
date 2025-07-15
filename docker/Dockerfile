@@ -1,21 +1,28 @@
-# Dockerfile for Hive Mining Monitor
+# Dockerfile for Hive Mining Monitor - Multi-Architecture Compatible
 FROM mcr.microsoft.com/powershell:latest
 
 # Metadata labels
 LABEL org.opencontainers.image.title="Hive Mining Monitor"
 LABEL org.opencontainers.image.description="HiveOS mining rig monitoring with MQTT support for Unraid"
 LABEL org.opencontainers.image.version="1.0.0"
-LABEL org.opencontainers.image.source="https://github.com/yourusername/hive-mining-monitor"
+LABEL org.opencontainers.image.source="https://github.com/hngyhngyhobo/hive-mining-monitor-v2"
 LABEL org.opencontainers.image.licenses="MIT"
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    curl \
-    iputils-ping \
-    netcat-openbsd \
-    tzdata \
-    && rm -rf /var/lib/apt/lists/*
+# Set environment variable to avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies with better error handling
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        iputils-ping \
+        netcat-openbsd \
+        tzdata \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/* \
+        && rm -rf /tmp/* \
+        && rm -rf /var/tmp/*
 
 # Create non-root user for security (Unraid best practice)
 RUN groupadd -g 1000 appuser && \
